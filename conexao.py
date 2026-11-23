@@ -6,8 +6,8 @@ def conectar():
     try:
         conexao = mysql.connector.connect(
             host="localhost",
-            user="root",          # Altere se o seu usuário no Workbench for outro
-            password="SUA_SENHA", # Coloque a senha do seu MySQL Workbench
+            user="root",          
+            password="SUA_SENHA", 
             database="barbearia_lfj"
         )
         return conexao
