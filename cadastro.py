@@ -13,7 +13,7 @@ def cadastrar_agendamento():
 
     conn = conectar()
     if not conn:
-        return
+        return "Falha na conexão com o banco de dados."
 
     try:
         cursor = conn.cursor()
@@ -24,9 +24,10 @@ def cadastrar_agendamento():
         dados = (cliente, telefone, servico, barbeiro, data_horario, valor)
         cursor.execute(sql, dados)
         conn.commit()
-        print(f"\nAgendamento cadastrado com sucesso! (ID gerado: {cursor.lastrowid})")
+        return(f"\nAgendamento cadastrado com sucesso! (ID gerado: {cursor.lastrowid})")
     except Error as erro:
-        print(f"\nErro ao cadastrar agendamento: {erro}")
+        return(f"\nErro ao cadastrar agendamento: {erro}")
     finally:
-        cursor.close()
+        if "cursor" in locals():
+            cursor.close()
         conn.close()
