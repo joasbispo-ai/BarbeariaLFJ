@@ -5,10 +5,12 @@ def conectar():
     """Estabelece e retorna a conexão com o banco barbearia_lfj."""
     try:
         conexao = mysql.connector.connect(
-            host="localhost",
-            user="root",          
-            password="SUA_SENHA", 
-            database="barbearia_lfj"
+            host="127.0.0.1",
+            port=3306,
+            user="root",
+            password="",
+            database="barbearia_lfj",
+            use_pure=True
         )
         return conexao
     except Error as erro:
