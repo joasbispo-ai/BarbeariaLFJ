@@ -6,7 +6,7 @@ def conectar():
     try:
         conexao = mysql.connector.connect(
             host="127.0.0.1",
-            port=3306,
+            port=3308,          # Porta exata exibida no seu XAMPP
             user="root",
             password="",
             database="barbearia_lfj",
