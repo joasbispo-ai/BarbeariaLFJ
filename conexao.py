@@ -26,7 +26,6 @@ RESUMO DE COMO ESTE ARQUIVO FUNCIONA:
      mensagem clara e retorna `None` para que a função chamadora pare com segurança.
 
 """
-
 import mysql.connector
 from mysql.connector import Error
 
@@ -34,13 +33,15 @@ def conectar():
     """Estabelece e retorna a conexão com o banco barbearia_lfj."""
     try:
         conexao = mysql.connector.connect(
-            host="localhost",
-            user="root",          
-            password="barbearia123", 
-            database="barbearia_lfj"
+            host="127.0.0.1",
+            port=3308,          
+            user="root",
+            password="",        
+            database="barbearia_lfj",
+            use_pure=True
         )
         return conexao
-    # Exibe o motivo exato da falha (ex: acesso negado, servidor offline ou banco inexistente)
+      # Exibe o motivo exato da falha (ex: acesso negado, servidor offline ou banco inexistente)
     except Error as erro:
         print(f"\n[ERRO DE CONEXÃO] Não foi possível conectar ao MySQL: {erro}")
         return None
