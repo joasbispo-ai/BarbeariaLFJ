@@ -72,13 +72,13 @@ def cadastrar_agendamento():
         conn.commit()
 
         # Exibe confirmação junto com o ID gerado automaticamente pelo banco
-        print(f"\nAgendamento cadastrado com sucesso! (ID gerado: {cursor.lastrowid})")
+        return(f"\nAgendamento cadastrado com sucesso! (ID gerado: {cursor.lastrowid})")
 
     except Error as erro:
         # Captura e exibe eventuais falhas de execução no banco de dados
-        print(f"\nErro ao cadastrar agendamento: {erro}")
+        return (f"\nErro ao cadastrar agendamento: {erro}")
 
     finally:
         # 4. Fecha o cursor e a conexão para liberar recursos do servidor
-        cursor.close()
+        if "cursor" in locals():cursor.close()
         conn.close()
