@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS agendamentos (
     servico VARCHAR(80) NOT NULL,
     barbeiro VARCHAR(60) NOT NULL,
     data_horario VARCHAR(25) NOT NULL,
-    valor DECIMAL(10, 2) NOT NULL,
+    valor DECIMAL(10 , 2 ) NOT NULL,
     status VARCHAR(20) DEFAULT 'Agendado'
 );
+
+select * from agendamentos
