@@ -42,6 +42,15 @@ def ler_texto_obrigatorio(mensagem):
 
         print("Erro: Este campo não pode ficar vazio. Tente novamente.")
 
+def ler_texto_ou_voltar(mensagem):  # Cria função que lê texto obrigatório permitindo voltar com 0
+    """Lê um texto obrigatório, mas permite digitar 0 para cancelar e voltar ao menu."""
+    while True:  # Repete a leitura até receber uma entrada válida ou 0
+        valor = input(mensagem).strip()  # Lê a entrada do usuário e remove espaços nas pontas
+        if valor == "0":  # Verifica se o usuário digitou 0 para voltar
+            return None  # Retorna None para sinalizar cancelamento e retorno ao menu
+        if valor:  # Verifica se há algum texto digitado após limpar espaços
+            return valor  # Retorna o texto válido
+        print("Erro: Este campo não pode ficar vazio (ou digite 0 para voltar).")  # Avisa sobre campo vazio ou opção 0
 
 def ler_valor_monetario(mensagem):
     """
