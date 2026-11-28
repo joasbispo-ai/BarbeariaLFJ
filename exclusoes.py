@@ -41,7 +41,17 @@ def excluir_agendamento():
     print("\n--- EXCLUIR AGENDAMENTO ---")
 
     # 1. Solicita um ID inteiro positivo antes de consultar o banco
-    id_agendamento = ler_id_valido("Informe o ID do agendamento que deseja excluir: ")
+    while True:  # Repete até receber um ID válido ou 0 para voltar
+        entrada_id = input("Informe o ID do agendamento (ou 0 para voltar): ").strip()  # Lê o ID ou 0 e remove espaços
+       
+        if entrada_id == "0":  # Verifica se o usuário quer voltar ao menu
+            return  # Sai da função de exclusão sem consultar o banco
+        
+        if entrada_id.isdigit() and int(entrada_id) > 0:  # Confirma que é um número inteiro positivo
+            id_agendamento = int(entrada_id)  # Converte o ID para inteiro
+            break  # Sai do loop de validação do ID
+       
+       print("Erro: Informe um ID numérico válido ou 0 para voltar.")  # Informa erro caso a entrada seja inválida
 
     # 2. Abre a conexão com o MySQL; retorna se houver falha na conexão
     conn = conectar()
@@ -67,7 +77,11 @@ def excluir_agendamento():
         )
 
         # 4. Solicita confirmação explícita ('S' para confirmar, qualquer outra tecla cancela)
-        confirmacao = input("Tem certeza que deseja excluir este registro? (S/N): ").strip().upper()
+        confirmacao = input("Confirmar exclusão? (S para sim / N ou 0 para voltar): ").strip().upper()  # Lê confirmação aceitando N ou 0 para cancelar
+        
+        elif confirmacao in ("N", "0"):  # Verifica se o usuário cancelou digitando N ou 0
+           
+            print("Operação cancelada. Voltando ao menu principal...")  # Informa que a exclusão foi cancelada
 
         if confirmacao == "S":
             # Executa a exclusão filtrando apenas pelo ID informado
@@ -76,6 +90,7 @@ def excluir_agendamento():
             # Confirma e salva permanentemente a exclusão no MySQL Workbench
             conn.commit()
             print("Agendamento excluído permanentemente.")
+            
         else:
             # Cancela a operação sem alterar o banco de dados
             print("Operação cancelada pelo usuário.")
