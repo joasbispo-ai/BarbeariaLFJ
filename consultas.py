@@ -50,6 +50,10 @@ def consultar_individual():
     print("\n--- BUSCAR AGENDAMENTO ---")
     print("1 - Buscar por ID")
     print("2 - Buscar por nome do cliente")
+    print("0 - Voltar ao menu principal")  # Exibe a opção 0 para retornar ao menu na tela de busca
+    if opcao == "0":  # Verifica se o usuário escolheu voltar ao menu principal
+        return  # Encerra a consulta sem abrir conexão com o banco
+
     opcao = input("Escolha uma opção: ").strip()
 
     conn = conectar()
