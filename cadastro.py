@@ -29,7 +29,7 @@ RESUMO DE COMO ESTE ARQUIVO FUNCIONA:
 
 from mysql.connector import Error
 from conexao import conectar
-from validacoes import ler_texto_obrigatorio, ler_valor_monetario
+from validacoes import ler_texto_obrigatorio, ler_valor_monetario, ler_texto_ou_voltar
 
 
 def cadastrar_agendamento():
@@ -38,9 +38,14 @@ def cadastrar_agendamento():
     um novo registro na tabela 'agendamentos' do banco 'barbearia_lfj'.
     """
     print("\n--- NOVO AGENDAMENTO | BARBEARIA LFJ ---")
+    
+    cliente = ler_texto_ou_voltar("Nome do cliente (0 para voltar): ")  # Lê o nome do cliente permitindo digitar 0 para voltar
+    if cliente is None:  # Verifica se o usuário escolheu voltar
+        print("Cadastro cancelado. Voltando ao menu principal...")  # Informa que o cadastro foi cancelado
+        
+        return  # Encerra a função e retorna ao menu principal
 
     # 1. Coleta e validação das entradas (evita campos em branco ou preços inválidos)
-    cliente = ler_texto_obrigatorio("Nome do cliente: ")
     telefone = ler_texto_obrigatorio("Telefone/WhatsApp: ")
     servico = ler_texto_obrigatorio("Serviço (ex: Corte Degradê, Barba, Combo): ")
     barbeiro = ler_texto_obrigatorio("Barbeiro responsável: ")
