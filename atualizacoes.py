@@ -32,7 +32,7 @@ RESUMO DE COMO ESTE ARQUIVO FUNCIONA:
 
 from mysql.connector import Error
 from conexao import conectar
-from validacoes import ler_id_valido, ler_texto_obrigatorio, ler_valor_monetario
+from validacoes import ler_texto_obrigatorio, ler_valor_monetario
 
 
 def atualizar_agendamento():
@@ -42,9 +42,19 @@ def atualizar_agendamento():
     """
     print("\n--- ATUALIZAR AGENDAMENTO ---")
 
-    # 1. Solicita um ID numérico válido antes de consultar o banco
-    id_agendamento = ler_id_valido("Informe o ID do agendamento que deseja alterar: ")
-
+   while True:  # Repete até receber um ID válido ou 0 para voltar
+       
+        entrada_id = input("Informe o ID do agendamento (ou 0 para voltar): ").strip()  # Lê o ID ou 0 e remove espaços
+      
+        if entrada_id == "0":  # Verifica se o usuário quer voltar ao menu
+            return  # Sai da função de atualização sem consultar o banco
+      
+        if entrada_id.isdigit() and int(entrada_id) > 0:  # Confirma que é um número inteiro positivo
+            id_agendamento = int(entrada_id)  # Converte o ID para inteiro
+            break  # Sai do loop de validação do ID
+       
+        print("Erro: Informe um ID numérico válido ou 0 para voltar.")  # Informa erro caso a entrada seja inválida
+   
     # 2. Abre a conexão com o MySQL; retorna se não for possível conectar
     conn = conectar()
     if not conn:
@@ -73,8 +83,12 @@ def atualizar_agendamento():
         print("1 - Data e Horário")
         print("2 - Serviço e Valor")
         print("3 - Status (ex: Concluído, Cancelado, Agendado)")
+        print("0 - Voltar ao menu principal")  # Exibe a opção 0 para cancelar a edição antes de alterar
+        if escolha == "0":  # Verifica se o usuário escolheu cancelar a atualização
+            print("Atualização cancelada. Voltando ao menu...")  # Informa o cancelamento da operação
+            return  # Retorna ao menu principal sem executar UPDATE
         escolha = input("Opção: ").strip()
-
+      
         # 5. Executa o comando UPDATE correspondente usando cláusula WHERE no ID
         if escolha == "1":
             nova_data = ler_texto_obrigatorio("Nova data e horário: ")
